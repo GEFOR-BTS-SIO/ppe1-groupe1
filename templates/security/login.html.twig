@@ -1,0 +1,108 @@
+
+
+	<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% block title %}Log in!{% endblock %}
+{% block body %}
+<div>
+<nav class="bg-gray-800 pb-">
+    <div class="justify-between max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 bg-gr">
+        <div class="justify-between items-center h-16">
+            <div class="flex flex-nowrap justify-between sm:justify-start">
+                <div class="flex flex-nowrap justify-between ">
+                    <a href="{{ path('app_user') }}" class="text-white font-bold text-xl ">
+                       <img class="mr-20" src="{{asset('geforbis.png')}}">
+                    </a>
+                   
+                </div>
+               
+                    </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </div>
+</nav>
+</div>
+<form method="post">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+    {% endif %}
+
+  {% block stylesheets %}
+ <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" href="css/style.css">
+        {% endblock %}
+  
+
+	
+
+	</head>
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				Trombinoscope
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-6 col-lg-5">
+					<div class="login-wrap p-4 p-md-5">
+		      	<div class="icon d-flex align-items-center justify-content-center">
+		      		<span class="fa fa-user-o"></span>
+		      	</div>
+		      	<h3 class="text-center mb-4">Have an account?</h3>
+						<form action="#" class="login-form">
+                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control rounded-left" autocomplete="email" required autofocus/>
+							</div>
+				<div class="form-group d-flex">
+								<span class="fa fa-lock"></span>
+                        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+							</div>
+              <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}"
+>
+	            <div class="form-group d-md-flex">
+	            	<div class="w-50">
+	            		<label class="checkbox-wrap checkbox-primary">Remember Me
+									  <input type="checkbox" checked>
+									  <span class="checkmark"></span>
+									</label>
+								</div>
+								<div class="w-50 text-md-right">
+									<a href="#">Forgot Password</a>
+								</div>
+	            </div>
+	            <div class="form-group">
+	            	<button type="submit" class="btn btn-primary rounded submit p-3 px-5">Get Started</button>
+	            </div>
+	          </form>
+	        </div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script src="js/jquery.min.js"></script>
+  <script src="js/popper.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/main.js"></script>
+{% endblock %}
+	</body>
+</html>
+
+    
+							
+

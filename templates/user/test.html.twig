@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+{% include 'navbar.php'%}
+
+<div class="example-wrapper">
+   <div class="container mx-auto px-4 py-8">
+   
+  <div class="max-w-sm rounded overflow-hidden shadow-lg">
+    <img class="w-full" src="lapin.jpg" alt="User photo">
+    <div class="px-6 py-4">
+
+      <div class="font-bold text-xl mb-2">{{ user.email }} <br>{{ user.prenom }}</div>
+      <p class="text-gray-700 text-base">
+        <tbody>
+       
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.prenom }}</td>
+                <td>{{ user.idformation.cursus }}</td>
+                <td>{{ user.idformation.annee }}</td>
+                <td>
+                    <a href="{{ path('app_profil_show', {'id': user.id}) }}">show</a>
+                    <a href="{{ path('app_profil_edit', {'id': user.id}) }}">edit</a>
+                </td>
+            </tr>
+        
+        </tbody>
+      </p>
+    </div>
+  </div>
+</div>
+
+    This friendly message is coming from:
+    <ul>
+         
+        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/ProjetIX/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a></code></li>
+        <li>Your template at <code><a href="{{ 'C:/wamp64/www/ProjetIX/templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a></code></li>
+    </ul>
+</div>
+{% endblock %}
