@@ -98,14 +98,15 @@ public function findOneBySomeField($value): ?User
        ;
    }
 
-   public function search($searchTerm): ?array
-    {
-        $qb = $this->createQueryBuilder('b')
-            ->where('b.ville LIKE :searchTerm')
-    
-            ->setParameter('searchTerm', '%'.$searchTerm.'%')
-            ->getQuery();
-dump($qb);
-        return $qb->execute();
-    }
+  public function search($searchTerm): ?array
+{
+    $qb = $this->createQueryBuilder('b')
+        ->where('b.ville LIKE :searchTerm')
+        ->orWhere('b.prenom LIKE :searchTerm')
+        ->orWhere('b.nom LIKE :searchTerm')
+        ->setParameter('searchTerm', '%'.$searchTerm.'%')
+        ->getQuery();
+
+    return $qb->execute();
+}
 }
