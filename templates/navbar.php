@@ -9,7 +9,7 @@
                     <a href="{{ path('app_user') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                        Mon profil
                     </a>
-                    {{ include('profil/_delete_form.html.twig') }}
+                    
                     <a href="{{ path('app_profil_edit', {'id': app.user.id}) }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                        Editer
                     </a>

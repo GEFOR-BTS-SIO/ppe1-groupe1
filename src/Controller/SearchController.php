@@ -17,20 +17,15 @@ class SearchController extends AbstractController
     public function index(Request $request, UserRepository $userRepository): Response
     {
         $searchTerm = $request->query->get('q');
-
-
         $user = $userRepository->search($searchTerm);
 
+
         $form = $this->createForm(SearchType::class);
-
         $form->handleRequest($request);
-        dump($user);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $searchTerm = $form->getData()['search'];
 
-dump($user);
-            return $this->redirectToRoute('search/index.html.twig', ['b' => $searchTerm]);
+            return $this->redirectToRoute('search/index.html.twig', ['q' => $searchTerm]);
         }
 
 

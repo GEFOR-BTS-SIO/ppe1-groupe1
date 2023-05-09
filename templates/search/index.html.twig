@@ -13,6 +13,7 @@
   <label for="searchTerm">Search:</label>
   <input type="text" id="searchTerm" name="q">
   <button type="submit">Search</button>
+   {% if users %} 
 </form>
 
      {% for user in users %}
@@ -30,22 +31,19 @@
                     <td class="px-2 py-2 text-gray-500 font-semibold">Email</td>
                     <td class="px-2 py-2">{{user.email}}</td>
                 </tr>
+                 <tr>
+                    <td class="px-2 py-2 text-gray-500 font-semibold">Email</td>
+                    <td class="px-2 py-2">{{user.ville}}</td>
+                </tr>
                 <tr>
                     <td class="px-2 py-2 text-gray-500 font-semibold">Description</td>
                     <td class="px-2 py-2">{{user.description }}</td>
                 </tr>
             </tbody></table>
         {% endfor %}
-  <form method="get" action="{{ path('app_search') }}">
- {% if users %}   
+ 
+  
 
-    <button type="submit">Search</button>
-</form>
-
-     
-    <ul>
-       
-    </ul>
 {% else %}
     <p>No results found.</p>
 {% endif %}

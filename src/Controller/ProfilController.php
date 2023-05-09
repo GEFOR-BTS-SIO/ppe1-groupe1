@@ -105,8 +105,6 @@ $formation = $formationRepository->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             #condition pour hacher le password
-
-           
             $plaintextPassword = $form->get('password')->getData();
             if (!empty($plaintextPassword)) {
                 $hasedPassword = $passwordHasher->hashPassword(
