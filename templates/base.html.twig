@@ -9,13 +9,12 @@
         
     </head>
     <body>
+        {% include 'navbar.php'%}
+        {% block content %}
         
-          {% include 'navbar.php'%}
-        {% block body %}
-        
-      
 
         {% endblock %}
+        {% include 'footer.php'%}
         <script src="https://cdn.tailwindcss.com"></script>
     </body>
 </html>
