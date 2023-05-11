@@ -11,6 +11,12 @@ class FooterController extends AbstractController
     #[Route('/rgpd', name: 'app_rgpd')]
     public function rgpd(): Response
     {
-       return $this->render('./footer/rgpd.html.twig');
+       return $this->render('./footer/rgpd.html.twig'); 
+        }
+
+    #[Route('/contact', name: 'app_contact')]
+    public function contact(): Response
+    {
+       return $this->render('./footer/contact.html.twig');
         }
     }
