@@ -14,7 +14,7 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="overflow-hidden shadow-md sm:rounded-md">
 
-
+{{ form_start(form) }}
             <fieldset>
                 <legend class="text-base font-medium">{{ 'Mon profil'|trans }}</legend>
                 <div class="mt-4 space-y-4">
@@ -63,7 +63,7 @@
                     {{ button_label|default('Save') }}
                 </button>
             </div>
-
+{{ form_end(form) }}
         </div>
     </div>
 
