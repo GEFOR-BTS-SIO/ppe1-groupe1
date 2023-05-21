@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-{% block title %}Log in!{% endblock %}
+{% block title %}Connexion!{% endblock %}
 {% block body %}
 <div>
 <nav class="bg-gray-800 pb-">
@@ -36,7 +36,7 @@
 
     {% if app.user %}
         <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+            Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
         </div>
     {% endif %}
 
@@ -63,7 +63,7 @@
 		      	<div class="icon d-flex align-items-center justify-content-center">
 		      		<span class="fa fa-user-o"></span>
 		      	</div>
-		      	<h3 class="text-center mb-4">Have an account?</h3>
+		      	<h3 class="text-center mb-4">Se connecter</h3>
 						<form action="#" class="login-form">
                 <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control rounded-left" autocomplete="email" required autofocus/>
 							</div>
@@ -76,17 +76,17 @@
 >
 	            <div class="form-group d-md-flex">
 	            	<div class="w-50">
-	            		<label class="checkbox-wrap checkbox-primary">Remember Me
+	            		<label class="checkbox-wrap checkbox-primary">Se souvenir de moi
 									  <input type="checkbox" checked>
 									  <span class="checkmark"></span>
 									</label>
 								</div>
 								<div class="w-50 text-md-right">
-									<a href="#">Forgot Password</a>
+									<a href="#">Mot de passe oublié</a>
 								</div>
 	            </div>
 	            <div class="form-group">
-	            	<button type="submit" class="btn btn-primary rounded submit p-3 px-5">Get Started</button>
+	            	<button type="submit" class="btn btn-primary rounded submit p-3 px-5">Connexion</button>
 	            </div>
 	          </form>
 	        </div>

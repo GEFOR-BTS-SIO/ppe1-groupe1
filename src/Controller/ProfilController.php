@@ -24,6 +24,7 @@ class ProfilController extends AbstractController
     {
 $user = $userRepository->findAll();
 $formation = $formationRepository->findAll();
+
 $form = $this->createForm(ParentFormType::class);
 $form->handleRequest($request);
 if ($form->isSubmitted() && $form->isValid()) {

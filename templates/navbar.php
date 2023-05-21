@@ -25,7 +25,7 @@
                     
                         <a href="{{ path('admin') }}" 
                         class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium">
-                        Admin zone
+                        Administration
                         </a>
                     </div>
                     </div>
