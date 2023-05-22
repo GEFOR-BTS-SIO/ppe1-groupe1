@@ -14,46 +14,36 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="overflow-hidden shadow-md sm:rounded-md">
 
-
+{{ form_start(form) }}
             <fieldset>
                 <legend class="text-base font-medium">{{ 'My identity'|trans }}</legend>
                 <div class="mt-4 space-y-4">
                      </div>
-                     {% if is_granted('ROLE_ADMIN') %}
-
-
-					<div>
-                        {{ form_label(form.roles, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
-                        {{ form_widget(form.roles, {'attr': {'class': 'form-input rounded-md shadow-sm mt-1 block w-full'}}) }}
-                    </div>
-					<div>
-                        {{ form_label(form.password, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
-                        {{ form_widget(form.password, {'attr': {'class': 'form-input rounded-md shadow-sm mt-1 block w-full'}}) }}
-                    </div>
-                    {% endif %}
+                   
+					
                     <div>
                         {{ form_label(form.nom, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
-                        {{ form_widget(form.nom, {'attr': {'class': 'form-input rounded-md shadow-sm mt-1 block w-full'}}) }}
+                        {{ form_widget(form.nom, {'attr': {'class': 'form-input rounded-md shadow-md mt-1 block w-full'}}) }}
                     </div>
                     <div>
                         {{ form_label(form.prenom, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
-                        {{ form_widget(form.prenom, {'attr': {'class': 'form-input rounded-md shadow-sm mt-1 block w-full'}}) }}
+                        {{ form_widget(form.prenom, {'attr': {'class': 'form-input rounded-md shadow-md mt-1 block w-full'}}) }}
                     </div>
                     <div>
                         {{ form_label(form.email, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
-                        {{ form_widget(form.email, {'attr': {'class': 'form-input rounded-md shadow-sm mt-1 block w-full'}}) }}
+                        {{ form_widget(form.email, {'attr': {'class': 'form-input rounded-md shadow-md mt-1 block w-full'}}) }}
                     </div>
 					<div>
                         {{ form_label(form.ville, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
-                        {{ form_widget(form.ville, {'attr': {'class': 'form-input rounded-md shadow-sm mt-1 block w-full'}}) }}
+                        {{ form_widget(form.ville, {'attr': {'class': 'form-input rounded-md shadow-md mt-1 block w-full'}}) }}
                     </div>
 					<div>
                         {{ form_label(form.photo, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
-                        {{ form_widget(form.photo, {'attr': {'class': 'form-input rounded-md shadow-sm mt-1 block w-full'}}) }}
+                        {{ form_widget(form.photo, {'attr': {'class': 'form-input rounded-md shadow-md mt-1 block w-full'}}) }}
                     </div>
 					<div>
                         {{ form_label(form.idformation, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
-                        {{ form_widget(form.idformation, {'attr': {'class': 'form-input rounded-md shadow-sm mt-1 block w-full'}}) }}
+                        {{ form_widget(form.idformation, {'attr': {'class': 'form-input rounded-md shadow-md mt-1 block w-full'}}) }}
                     </div>
                 </div>
             </fieldset>
@@ -63,14 +53,13 @@
                     {{ button_label|default('Save') }}
                 </button>
             </div>
-
+{{ form_end(form) }}
         </div>
     </div>
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-4">
         <a href="{{ path('app_profil_index') }}" class="text-blue-600 hover:text-blue-800">{{ 'back to list'|trans }}</a>
     </div>
- {% if is_granted('ROLE_ADMIN') %}
+
     {{ include('profil/_delete_form.html.twig') }}
-{%endif%}
 {% endblock %}

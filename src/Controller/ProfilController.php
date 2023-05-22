@@ -19,24 +19,27 @@ use Symfony\Component\HttpFoundation\Session\Session;
 #[Route('/profil')]
 class ProfilController extends AbstractController
 {
-    #[Route('/', name: 'app_profil_index', methods: ['GET'])]
+  #[Route('/', name: 'app_profil_index', methods: ['GET'])]
     public function index(Request $request, UserRepository $userRepository, FormationRepository $formationRepository): Response
     {
-$user = $userRepository->findAll();
-$formation = $formationRepository->findAll();
-$form = $this->createForm(ParentFormType::class);
-$form->handleRequest($request);
-if ($form->isSubmitted() && $form->isValid()) {
-    $data = $form->getData();
+        
+        $idformation = $request->query->get(('idformation')); // Récupérer la valeur du filtre
 
-    return $this->redirectToRoute('app_user');
-}
-dump($user);
-return $this->render('profil/index.html.twig', [
-    'users' => $user,
-    'form' => $form->createView(),
-]);
+        // Utiliser la méthode appropriée du Repository pour obtenir les profils filtrés et triés
+        $idformation = $userRepository->findBygetIdformation($idformation);
+        $users = $userRepository->findAll();
 
+      dump($users);
+        // Créer le formulaire de filtre
+        $form = $this->createForm(ParentFormType::class);
+        $form->handleRequest($request);
+
+        return $this->render('profil/index.html.twig', [
+            'users' => $users,
+            'formation'=>$idformation,
+            'form' => $form->createView(),
+        ]);
+  
     }
 
     #[Route('/new', name: 'app_profil_new', methods: ['GET', 'POST'])]
