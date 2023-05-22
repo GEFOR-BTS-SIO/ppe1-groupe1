@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\AdminType;
 use App\Repository\UserRepository;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Repository\FormationRepository;
@@ -19,25 +20,38 @@ use Symfony\Component\HttpFoundation\Session\Session;
 #[Route('/profil')]
 class ProfilController extends AbstractController
 {
-    #[Route('/', name: 'app_profil_index', methods: ['GET'])]
+    #[Route('/', name: 'app_profil_index', methods: ['GET', 'POST'])]
     public function index(Request $request, UserRepository $userRepository, FormationRepository $formationRepository): Response
     {
-$user = $userRepository->findAll();
-$formation = $formationRepository->findAll();
+        $utilisateur = $this->getUser();
+        $users = $userRepository->findAll();
+        $formations = $formationRepository->findAll();
 
-$form = $this->createForm(ParentFormType::class);
-$form->handleRequest($request);
-if ($form->isSubmitted() && $form->isValid()) {
-    $data = $form->getData();
+        if ($this->isGranted('ROLE_ADMIN')) {
+            // Utilisateur avec le rôle admin
+            $form = $this->createForm(AdminType::class, $utilisateur);
+            // ...
+            // Effectue les actions spécifiques à l'administrateur
 
-    return $this->redirectToRoute('app_user');
-}
-dump($user);
-return $this->render('profil/index.html.twig', [
-    'users' => $user,
-    'form' => $form->createView(),
-]);
+            return $this->render('profil/edit-admin.html.twig', [
+                'form' => $form->createView(),
+                'utilisateur' => $utilisateur,
+                'users' => $users,
+                'formations' => $formations,
+            ]);
+        } else {
+            // Utilisateur non-admin
+            $form = $this->createForm(UserType::class, $utilisateur);
+            // ...
+            // Effectue les actions spécifiques à l'utilisateur non-admin
 
+            return $this->render('profil/edit.html.twig', [
+                'form' => $form->createView(),
+                'utilisateur' => $utilisateur,
+                'users' => $users,
+                'formations' => $formations,
+            ]);
+        }
     }
 
     #[Route('/new', name: 'app_profil_new', methods: ['GET', 'POST'])]

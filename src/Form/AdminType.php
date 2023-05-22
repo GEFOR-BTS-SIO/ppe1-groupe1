@@ -14,12 +14,20 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class UserType extends AbstractType
+class AdminType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('email')
+            ->add('roles', ChoiceType::class, [
+                'choices'  => [
+                    'Utilisateur' => 'ROLE_USER',
+                    'Administrateur' => 'ROLE_ADMIN',
+                ],
+                'multiple' => true,
+                'expanded' => true,
+            ])
             ->add('password', PasswordType::class)
             ->add('nom')
             ->add('prenom')
