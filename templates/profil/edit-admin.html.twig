@@ -19,9 +19,6 @@
                 <legend class="text-base font-medium">{{ 'Mon profil'|trans }}</legend>
                 <div class="mt-4 space-y-4">
                      </div>
-                     {% if is_granted('ROLE_ADMIN') %}
-
-
 					<div>
                         {{ form_label(form.roles, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
                         {{ form_widget(form.roles, {'attr': {'class': 'form-input rounded-md shadow-sm mt-1 block w-full'}}) }}
@@ -30,7 +27,6 @@
                         {{ form_label(form.password, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
                         {{ form_widget(form.password, {'attr': {'class': 'form-input rounded-md shadow-sm mt-1 block w-full'}}) }}
                     </div>
-                    {% endif %}
                     <div>
                         {{ form_label(form.nom, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
                         {{ form_widget(form.nom, {'attr': {'class': 'form-input rounded-md shadow-sm mt-1 block w-full'}}) }}

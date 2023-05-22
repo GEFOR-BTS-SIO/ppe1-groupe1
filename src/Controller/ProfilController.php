@@ -20,38 +20,23 @@ use Symfony\Component\HttpFoundation\Session\Session;
 #[Route('/profil')]
 class ProfilController extends AbstractController
 {
-    #[Route('/', name: 'app_profil_index', methods: ['GET', 'POST'])]
+    #[Route('/', name: 'app_profil_index', methods: ['GET'])]
     public function index(Request $request, UserRepository $userRepository, FormationRepository $formationRepository): Response
     {
-        $utilisateur = $this->getUser();
-        $users = $userRepository->findAll();
-        $formations = $formationRepository->findAll();
+$user = $userRepository->findAll();
+$formation = $formationRepository->findAll();
+$form = $this->createForm(ParentFormType::class);
+$form->handleRequest($request);
+if ($form->isSubmitted() && $form->isValid()) {
+    $data = $form->getData();
 
-        if ($this->isGranted('ROLE_ADMIN')) {
-            // Utilisateur avec le rôle admin
-            $form = $this->createForm(AdminType::class, $utilisateur);
-            // ...
-            // Effectue les actions spécifiques à l'administrateur
-
-            return $this->render('profil/edit-admin.html.twig', [
-                'form' => $form->createView(),
-                'utilisateur' => $utilisateur,
-                'users' => $users,
-                'formations' => $formations,
-            ]);
-        } else {
-            // Utilisateur non-admin
-            $form = $this->createForm(UserType::class, $utilisateur);
-            // ...
-            // Effectue les actions spécifiques à l'utilisateur non-admin
-
-            return $this->render('profil/edit.html.twig', [
-                'form' => $form->createView(),
-                'utilisateur' => $utilisateur,
-                'users' => $users,
-                'formations' => $formations,
-            ]);
-        }
+    return $this->redirectToRoute('app_user');
+}
+dump($user);
+return $this->render('profil/index.html.twig', [
+    'users' => $user,
+    'form' => $form->createView(),
+]);
     }
 
     #[Route('/new', name: 'app_profil_new', methods: ['GET', 'POST'])]
@@ -112,7 +97,7 @@ class ProfilController extends AbstractController
     #[Route('/{id}/edit', name: 'app_profil_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, UserRepository $userRepository, FormationRepository $formationRepository, SluggerInterface $slugger, UserPasswordHasherInterface $passwordHasher): Response
     {
- $user = $this->getUser();
+ $utilisateur = $this->getUser();
 $formation = $formationRepository->findAll();
 
         $form = $this->createForm(UserType::class, $user);
@@ -153,12 +138,27 @@ $formation = $formationRepository->findAll();
 
             return $this->redirectToRoute('app_profil_index', [], Response::HTTP_SEE_OTHER);
         }
-
-        return $this->renderForm('profil/edit.html.twig', [
-            'idformation'=>$formationRepository,
-            'user' => $user,
-            'form' => $form->createView(),
-        ]);
+        if ($this->isGranted('ROLE_ADMIN')) {
+            // Utilisateur avec le rôle admin
+            $form = $this->createForm(AdminType::class, $utilisateur);
+            // ...
+            // Effectue les actions spécifiques à l'administrateur
+            $userRepository->save($utilisateur, true);
+            return $this->render('profil/edit-admin.html.twig', [
+                'form' => $form->createView(),
+                'utilisateur' => $utilisateur,
+            ]);
+        } else if ($this->isGranted('ROLE_USER')) {
+            // Utilisateur non-admin
+            $form = $this->createForm(UserType::class, $utilisateur);
+            // ...
+            // Effectue les actions spécifiques à l'utilisateur non-admin
+            $userRepository->save($utilisateur, true);
+            return $this->render('profil/edit.html.twig', [
+                'form' => $form->createView(),
+                'utilisateur' => $utilisateur,
+            ]);
+        }
     }
 
 
