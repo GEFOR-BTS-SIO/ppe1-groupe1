@@ -97,70 +97,97 @@ return $this->render('profil/index.html.twig', [
     #[Route('/{id}/edit', name: 'app_profil_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, UserRepository $userRepository, FormationRepository $formationRepository, SluggerInterface $slugger, UserPasswordHasherInterface $passwordHasher): Response
     {
- $utilisateur = $this->getUser();
-$formation = $formationRepository->findAll();
-
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            #condition pour hacher le password
-            $plaintextPassword = $form->get('password')->getData();
-            if (!empty($plaintextPassword)) {
-                $hasedPassword = $passwordHasher->hashPassword(
-                    $user,
-                    $plaintextPassword
-                );
-                $user->setPassword($hasedPassword);
-            }
+        //Edition de profil pour un compte Admin
+        if ($this->isGranted('ROLE_ADMIN')) {   
+        $utilisateur = $this->getUser();
+        $formation = $formationRepository->findAll();
 
 
-            #condition pour importer les images
-            $photo = $form->get('photo')->getData();
-            if ($photo) {
-                $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$photo->guessExtension();
-
-                // Move the file to the directory where brochures are stored
-                try {
-                    $photo->move(
-                        $this->getParameter('stockage'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                }
-                $user->setPhoto($newFilename);
-            }
-
-            $userRepository->save($user, true);
-
-            return $this->redirectToRoute('app_profil_index', [], Response::HTTP_SEE_OTHER);
-        }
-        if ($this->isGranted('ROLE_ADMIN')) {
-            // Utilisateur avec le rôle admin
             $form = $this->createForm(AdminType::class, $utilisateur);
-            // ...
-            // Effectue les actions spécifiques à l'administrateur
-            $userRepository->save($utilisateur, true);
+            $form->handleRequest($request);
+            
+            if ($form->isSubmitted() && $form->isValid()) {
+                #condition pour hacher le password
+                $plaintextPassword = $form->get('password')->getData();
+                if (!empty($plaintextPassword)) {
+                    $hasedPassword = $passwordHasher->hashPassword(
+                        $utilisateur,
+                        $plaintextPassword
+                    );
+                    $utilisateur->setPassword($hasedPassword);
+                }
+
+                #condition pour importer les images
+                $photo = $form->get('photo')->getData();
+                if ($photo) {
+                    $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+                    // this is needed to safely include the file name as part of the URL
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename.'-'.uniqid().'.'.$photo->guessExtension();
+
+                    // Move the file to the directory where brochures are stored
+                    try {
+                        $photo->move(
+                            $this->getParameter('stockage'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                    }
+                    $utilisateur->setPhoto($newFilename);
+                }
+
+                $userRepository->save($utilisateur, true);   
+            }
             return $this->render('profil/edit-admin.html.twig', [
                 'form' => $form->createView(),
                 'utilisateur' => $utilisateur,
             ]);
+        //Edition de profil pour un compte utilisateur simple
         } else if ($this->isGranted('ROLE_USER')) {
-            // Utilisateur non-admin
+        $utilisateur = $this->getUser();
+        $formation = $formationRepository->findAll();
+
             $form = $this->createForm(UserType::class, $utilisateur);
-            // ...
-            // Effectue les actions spécifiques à l'utilisateur non-admin
-            $userRepository->save($utilisateur, true);
-            return $this->render('profil/edit.html.twig', [
-                'form' => $form->createView(),
-                'utilisateur' => $utilisateur,
-            ]);
+            $form->handleRequest($request);
+            
+            if ($form->isSubmitted() && $form->isValid()) {
+                #condition pour hacher le password
+                $plaintextPassword = $form->get('password')->getData();
+                if (!empty($plaintextPassword)) {
+                    $hasedPassword = $passwordHasher->hashPassword(
+                        $utilisateur,
+                        $plaintextPassword
+                    );
+                    $utilisateur->setPassword($hasedPassword);
+                }
+
+                #condition pour importer les images
+                $photo = $form->get('photo')->getData();
+                if ($photo) {
+                    $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+                    // this is needed to safely include the file name as part of the URL
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename.'-'.uniqid().'.'.$photo->guessExtension();
+
+                    // Move the file to the directory where brochures are stored
+                    try {
+                        $photo->move(
+                            $this->getParameter('stockage'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                    }
+                    $utilisateur->setPhoto($newFilename);
+                }
+
+                $userRepository->save($utilisateur, true);
+            }
+        return $this->render('profil/edit-user.html.twig', [
+            'form' => $form->createView(),
+            'utilisateur' => $utilisateur,
+        ]);
         }
     }
-
 
     #[Route('/{id}', name: 'app_profil_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
