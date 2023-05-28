@@ -1,53 +1,62 @@
+{# templates/profil/index.html.twig #}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Profil index{% endblock %}
 
 {% block body %}
-    <form class="filter-form" action="{{ path('app_profil_index') }}" method="get">
-        <label for="cursus">Cursus:</label>
-        <input type="text" id="cursus" name="cursus" value="{{ app.request.query.get('user.idformation.cursus') }}">
-        <button type="submit">Filtrer</button>
-    </form>
+    <div class="filter-form">
+        {{ form_start(filterForm) }}
+        {{ form_row(filterForm.cursus) }}
+        {{ form_end(filterForm) }}
+    </div>
 
     <div class="grid grid-cols-4 gap-6">
-        {% for user in users %}
-           <div class="max-w-xs bg-white shadow-xl rounded-lg py-3">
-    <div class="photo-wrapper p-2">
-        <img src="{{ asset('photo/' ~ user.photo) }}" class="h-32 w-32 object-cover rounded-full"/>
+         {% for user in users %}
+    <div class="flex items-center h-screen w-full justify-center">
+        <div class="flex items-center h-screen w-full justify-center">
+
+<div class="max-w-xs">
+    <div class="bg-white shadow-xl rounded-lg py-3">
+
+        <div class="photo-wrapper p-2">
+    <img src="{{ asset('photo/' ~ user.photo) }}" class="h-32 w-32 object-cover rounded-full"/>
 </div>
-    <div class="p-2">
-      <h3 class="text-center text-xl text-gray-900 font-medium leading-8">{{ user.nom }} {{ user.prenom }}</h3>
-                      <p>{{user.idformation.cursus}} {{ user.idformation.annee }}</p>
-      <div class="text-center text-gray-400 text-xs font-semibold"></div>
-      <table class="text-xs my-3">
-        <tbody>
-          <tr>
-            <td class="px-2 py-2 text-gray-500 font-semibold">Adresse</td>
-            <td class="px-2 py-2">Paris</td>
-          </tr>
-          <tr>
-            <td class="px-2 py-2 text-gray-500 font-semibold">Email</td>
-            <td class="px-2 py-2">{{user.email}}</td>
-          </tr>
-          <tr>
-            <td class="px-2 py-2 text-gray-500 font-semibold">Description</td>
-            <td class="px-2 py-2">{{user.description }}</td>
-          </tr>
-        </tbody>
-      </table>
+        <div class="p-2">
+            <h3 class="text-center text-xl text-gray-900 font-medium leading-8">{{ user.nom }} {{ user.prenom }}</h3>
+            <div class="text-center text-gray-400 text-xs font-semibold">
+                <p>{{user.idformation.cursus}} {{ user.idformation.annee }}</p>
+            </div>
+            <table class="text-xs my-3">
+                <tbody><tr>
+                    <td class="px-2 py-2 text-gray-500 font-semibold">Adresse</td>
+                    <td class="px-2 py-2">Paris</td>
+                </tr>
+                <tr>
+                    <td class="px-2 py-2 text-gray-500 font-semibold">Email</td>
+                    <td class="px-2 py-2">{{user.email}}</td>
+                </tr>
+                <tr>
+                    <td class="px-2 py-2 text-gray-500 font-semibold">Description</td>
+                    <td class="px-2 py-2">{{user.description }}</td>
+                </tr>
+            </tbody></table>
+
+            <div class="text-center my-3">
+                <a class="text-xs text-indigo-500 italic hover:underline hover:text-indigo-600 font-medium" href="{{ path('app_profil_edit', {'id': user.id}) }}">Modifier mon profil</a>            
+            </div>
+
+        </div>
     </div>
-  </div>
-{% else %}
-  <div class="max-w-xs bg-white shadow-xl rounded-lg py-3">
-    <div class="p-2">
-      <p class="text-center text-gray-400 text-xs font-semibold">no records found</p>
+</div>
+
+</div>
     </div>
-  </div>
-        {% endfor %}
+{% endfor %}
     </div>
 
-    <button><a href="{{ path('app_profil_index', {'cursus': 'asc'}) }}">Trier par cursus (ascendant)</a></button>
-   <button> <a href="{{ path('app_profil_index', {'cursus': 'desc'}) }}">Trier par cursus (descendant)</a></button>
+  <a href="{{ path('app_profil_index', {'idformation': 'asc'}) }}">Trier par cursus (ascendant)</a>
+    <a href="{{ path('app_profil_index', {'idformation': 'desc'}) }}">Trier par cursus (descendant)</a>
     
     <a href="{{ path('app_profil_new') }}" class="block mt-6 text-blue-500 hover:text-blue-800">Create new</a>
 {% endblock %}

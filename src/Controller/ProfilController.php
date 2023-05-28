@@ -8,7 +8,7 @@ use App\Repository\UserRepository;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Repository\FormationRepository;
 use App\Form\ParentFormType ;
-
+use App\Form\ProfilFilterType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,28 +19,30 @@ use Symfony\Component\HttpFoundation\Session\Session;
 #[Route('/profil')]
 class ProfilController extends AbstractController
 {
-  #[Route('/', name: 'app_profil_index', methods: ['GET'])]
-    public function index(Request $request, UserRepository $userRepository, FormationRepository $formationRepository): Response
-    {
-        
-        $idformation = $request->query->get(('idformation')); // Récupérer la valeur du filtre
+  #[Route('/')]
+public function index(Request $request, UserRepository $userRepository): Response
+{
+    $filterForm = $this->createForm(ProfilFilterType::class);
+    $filterForm->handleRequest($request);
 
-        // Utiliser la méthode appropriée du Repository pour obtenir les profils filtrés et triés
-        $idformation = $userRepository->findBygetIdformation($idformation);
+    $users = [];
+
+    if ($filterForm->isSubmitted() && $filterForm->isValid()) {
+        $cursus = $filterForm->get('cursus')->getData();
+
+        // Effectuer une requête personnalisée pour filtrer les utilisateurs
+        $users = $userRepository->findByFilters($cursus);
+    } else {
+        // Récupérer tous les utilisateurs
         $users = $userRepository->findAll();
-
-      dump($users);
-        // Créer le formulaire de filtre
-        $form = $this->createForm(ParentFormType::class);
-        $form->handleRequest($request);
-
-        return $this->render('profil/index.html.twig', [
-            'users' => $users,
-            'formation'=>$idformation,
-            'form' => $form->createView(),
-        ]);
-  
     }
+
+    return $this->render('profil/index.html.twig', [
+        'filterForm' => $filterForm->createView(),
+        'users' => $users,
+    ]);
+}
+
 
     #[Route('/new', name: 'app_profil_new', methods: ['GET', 'POST'])]
 

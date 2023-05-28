@@ -109,4 +109,20 @@ public function findOneBySomeField($value): ?User
 
     return $qb->execute();
 }
+
+public function findByFilters($filterData)
+    {
+        $qb = $this->createQueryBuilder('u');
+        // Ajoutez la logique de filtrage en fonction des critères de filtrage
+
+        if (isset($filterData['cursus'])) {
+            $qb->andWhere('u.idformation.cursus = :cursus')
+                ->setParameter('cursus', $filterData['cursus']);
+        }
+
+        // Ajoutez d'autres conditions de filtrage en fonction de vos besoins
+
+        return $qb->getQuery()->getResult();
+    }
+
 }
