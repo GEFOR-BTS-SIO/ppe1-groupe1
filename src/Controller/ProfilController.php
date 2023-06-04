@@ -39,6 +39,7 @@ dump($user);
 return $this->render('profil/index.html.twig', [
     'users' => $user,
     'form' => $form->createView(),
+    'formations' => $formation,
 ]);
     }
 
@@ -48,7 +49,7 @@ return $this->render('profil/index.html.twig', [
     public function new(Request $request, UserRepository $userRepository, SluggerInterface $slugger, UserPasswordHasherInterface $passwordHasher, Security $security): Response
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(AdminType::class, $user);
         $form->handleRequest($request);
         $isGranted = $security->isGranted('ROLE_ADMIN');
 
@@ -146,6 +147,7 @@ return $this->render('profil/index.html.twig', [
             return $this->render('profil/edit-admin.html.twig', [
                 'form' => $form->createView(),
                 'utilisateur' => $utilisateur,
+                'formations' => $formation,
             ]);
         //Edition de profil pour un compte utilisateur simple
         } else if ($this->isGranted('ROLE_USER')) {

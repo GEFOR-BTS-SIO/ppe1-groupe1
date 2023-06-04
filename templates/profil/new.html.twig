@@ -1,62 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier Utilisateur{% endblock %}
-
-{% form_theme form _self %}
+{% block title %}New Profil{% endblock %}
 
 {% block body %}
-    <div class="py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <h1 class="text-2xl font-semibold">{{ 'Modifier utilisateur'|trans }}</h1>
-        </div>
-    </div>
+    <h1>Create new Profil</h1>
 
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="overflow-hidden shadow-md sm:rounded-md">
+    {{ include('profil/_form.html.twig') }}
 
-
-            <fieldset>
-                <legend class="text-base font-medium">{{ 'Mon identité'|trans }}</legend>
-                <div class="mt-4 space-y-4">
-                    <div>
-                        {{ form_label(form.nom, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
-                        {{ form_widget(form.nom, {'attr': {'class': 'form-input rounded-md shadow-sm mt-1 block w-full'}}) }}
-                    </div>
-                    <div>
-                        {{ form_label(form.prenom, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
-                        {{ form_widget(form.prenom, {'attr': {'class': 'form-input rounded-md shadow-sm mt-1 block w-full'}}) }}
-                    </div>
-                    {#<div>
-                        {{ form_label(form.email, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
-                        {{ form_widget(form.email, {'attr': {'class': 'form-input rounded-md shadow-sm mt-1 block w-full'}}) }}
-                    </div>#}
-					<div>
-                        {{ form_label(form.ville, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
-                        {{ form_widget(form.ville, {'attr': {'class': 'form-input rounded-md shadow-sm mt-1 block w-full'}}) }}
-                    </div>
-					<div>
-                        {{ form_label(form.photo, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
-                        {{ form_widget(form.photo, {'attr': {'class': 'form-input rounded-md shadow-sm mt-1 block w-full'}}) }}
-                    </div>
-					<div>
-                        {{ form_label(form.idformation, null, {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
-                        {{ form_widget(form.idformation, {'attr': {'class': 'form-input rounded-md shadow-sm mt-1 block w-full'}}) }}
-                    </div>
-                </div>
-            </fieldset>
-
-            <div class="flex items-center justify-end mt-4">
-                <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                    {{ button_label|default('Save') }}
-                </button>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-4">
-        <a href="{{ path('app_profil_index') }}" class="text-blue-600 hover:text-blue-800">{{ 'back to list'|trans }}</a>
-    </div>
-
-
+    <a href="{{ path('app_profil_index') }}">back to list</a>
 {% endblock %}
