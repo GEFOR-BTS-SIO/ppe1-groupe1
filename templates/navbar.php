@@ -1,3 +1,4 @@
+
 <nav class="bg-gray-800 py-4">
     <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center">
@@ -10,7 +11,11 @@
                     <a href="{{ path('app_user') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium">
                        Mon profil
                     </a>
-                    
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('app_profil_new') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium">
+                       Créer
+                    </a>
+                    {% endif %}
                     <a href="{{ path('app_profil_edit', {'id': app.user.id}) }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium">
                        Editer
                     </a>
@@ -20,18 +25,16 @@
                     <a href="{{ path('app_profil_index') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium">
                        Liste Profils
                     </a>
-                    
-                {% if is_granted('ROLE_ADMIN') %}
-                    
+                    {% if is_granted('ROLE_ADMIN') %}
                         <a href="{{ path('admin') }}" 
                         class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium">
                         Administration
                         </a>
+                    {% endif %}
                     </div>
                     </div>
                     </div>
                 </div>
-                {% endif %}
             </div>
         </div>
         <script src="https://cdn.tailwindcss.com"></script>

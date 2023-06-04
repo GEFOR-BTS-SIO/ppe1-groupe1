@@ -16,17 +16,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\Security;
 
+#[IsGranted('ROLE_USER')]
 #[Route('/profil')]
 class ProfilController extends AbstractController
 {
     #[Route('/', name: 'app_profil_index', methods: ['GET'])]
-    public function index(Request $request, UserRepository $userRepository, FormationRepository $formationRepository): Response
+    public function index(Request $request, UserRepository $userRepository, FormationRepository $formationRepository,Security $security): Response
     {
 $user = $userRepository->findAll();
 $formation = $formationRepository->findAll();
 $form = $this->createForm(ParentFormType::class);
 $form->handleRequest($request);
+$isGranted = $security->isGranted('ROLE_USER');
 if ($form->isSubmitted() && $form->isValid()) {
     $data = $form->getData();
 
@@ -39,13 +42,15 @@ return $this->render('profil/index.html.twig', [
 ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/new', name: 'app_profil_new', methods: ['GET', 'POST'])]
 
-    public function new(Request $request, UserRepository $userRepository, SluggerInterface $slugger, UserPasswordHasherInterface $passwordHasher): Response
+    public function new(Request $request, UserRepository $userRepository, SluggerInterface $slugger, UserPasswordHasherInterface $passwordHasher, Security $security): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
+        $isGranted = $security->isGranted('ROLE_ADMIN');
 
         if ($form->isSubmitted() && $form->isValid()) {
             $plaintextPassword = $form->get('password')->getData();
@@ -190,7 +195,7 @@ return $this->render('profil/index.html.twig', [
     }
 
     #[Route('/{id}', name: 'app_profil_delete', methods: ['POST'])]
-    public function delete(Request $request, User $user, UserRepository $userRepository): Response
+    public function delete(Request $request, User $user, UserRepository $userRepository, Security $security): Response
     {
 
             if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
