@@ -9,6 +9,7 @@ use App\Repository\UserRepository;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Repository\FormationRepository;
 use App\Form\ParentFormType ;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,8 +44,9 @@ return $this->render('profil/index.html.twig', [
 ]);
     }
 
-    #[IsGranted('ROLE_ADMIN')]
+    
     #[Route('/new', name: 'app_profil_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
 
     public function new(Request $request, UserRepository $userRepository, SluggerInterface $slugger, UserPasswordHasherInterface $passwordHasher, Security $security): Response
     {
