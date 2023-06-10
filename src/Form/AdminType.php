@@ -32,6 +32,7 @@ class AdminType extends AbstractType
             ->add('nom')
             ->add('prenom')
             ->add('ville')
+            ->add('description')
             ->add('idformation', EntityType::class, [
 
                 'class' => Formation::class,

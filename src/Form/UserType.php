@@ -24,12 +24,14 @@ class UserType extends AbstractType
             ->add('nom')
             ->add('prenom')
             ->add('ville')
+            ->add('description')
+            /*
             ->add('idformation', EntityType::class, [
 
                 'class' => Formation::class,
                 'choice_label' => 'cursus',
 
-            ])
+            ])*/
             ->add('photo', FileType::class, [
                 'label' => 'Photo',
 

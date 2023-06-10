@@ -3,57 +3,66 @@
 {% block title %}Hello SearchController!{% endblock %}
 
 {% block body %}
-<div class="example-wrapper bg-gray-100 px-4 py-8 rounded-lg">
-    <form method="get" action="{{ path('app_search') }}">
-    <div class="mb-4">
-  <input type="text" id="searchTerm" name="q" placeholder="Saisissez votre recherche" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-   </div>
-    <div class="flex items-center justify-center">
-  <button type="submit" class="bg-gray-800 hover:bg-orange-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" >Recherche</button>
+<div class="example-wrapper bg-gray-100 px-4 py-8 rounded-lg mb-16">
+    <div class="example-wrapper bg-gray-100 px-4 py-8 rounded-lg">
+        <form method="get" action="{{ path('app_search') }}">
+            <div class="mb-4">
+                <input type="text" id="searchTerm" name="q" placeholder="Saisissez votre recherche" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            <div class="flex items-center justify-center">
+                <button type="submit" class="bg-gray-800 hover:bg-orange-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Recherche</button>
+            </div>
+        </form>
     </div>
-    </form>
-    </div>
-   {% if users %} 
-   <div class="grid grid-cols-3 gap-6">
-     {% for user in users %}
-        <div class="max-w-xs bg-white shadow-xl rounded-lg py-3 pr-3 flex">
-        <div class="photo-wrapper p-2">
-        <img src="{{ asset('photo/' ~ user.photo) }}" class="h-32 w-32 object-cover rounded-full"/>
+
+    <div class="flex-grow">
+        {% if users %}
+        <div class="grid grid-cols-3 gap-6">
+            {% for user in users %}
+            <div class="max-w-xs bg-white shadow-xl rounded-lg py-3 pr-3 flex">
+                <div class="photo-wrapper p-2">
+                    <img src="{{ asset('photo/' ~ user.photo) }}" class="h-32 w-32 object-cover rounded-full"/>
+                </div>
+
+                <table class="text-xs bg-gray-100 py-3">
+                    <tbody>
+                        <tr>
+                            <td class="px-2 py-2 text-gray-500 font-semibold">Nom</td>
+                            <td class="px-2 py-2">{{user.nom}}</td>
+                        </tr>
+                        <tr>
+                            <td class="px-2 py-2 text-gray-500 font-semibold">Prenom</td>
+                            <td class="px-2 py-2">{{user.prenom}}</td>
+                        </tr>
+                        <tr>
+                            <td class="px-2 py-2 text-gray-500 font-semibold">Email</td>
+                            <td class="px-2 py-2">{{user.email}}</td>
+                        </tr>
+                        <tr>
+                            <td class="px-2 py-2 text-gray-500 font-semibold">Ville</td>
+                            <td class="px-2 py-2">{{user.ville}}</td>
+                        </tr>
+                        <tr>
+                            <td class="px-2 py-2 text-gray-500 font-semibold">Description</td>
+                            <td class="px-2 py-2">{{user.description }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            {% endfor %}
         </div>
-    
-           <table class="text-xs bg-gray-100 py-3">
-                <tbody> <tr>
-                    <td class="px-2 py-2 text-gray-500 font-semibold">Nom</td>
-                    <td class="px-2 py-2">{{user.nom}}</td>
-                </tr>
-                <tr>
-                    <td class="px-2 py-2 text-gray-500 font-semibold">Prenom</td>
-                    <td class="px-2 py-2">{{user.prenom}}</td>
-                </tr>
-                <tr>
-                    <td class="px-2 py-2 text-gray-500 font-semibold">Email</td>
-                    <td class="px-2 py-2">{{user.email}}</td>
-                </tr>
-                 <tr>
-                    <td class="px-2 py-2 text-gray-500 font-semibold">Ville</td>
-                    <td class="px-2 py-2">{{user.ville}}</td>
-                </tr>
-                <tr>
-                    <td class="px-2 py-2 text-gray-500 font-semibold">Description</td>
-                    <td class="px-2 py-2">{{user.description }}</td>
-                </tr>
-            </>
-        </table>
+
+        {% else %}
+        <div class="max-w-xs bg-white shadow-xl rounded-lg py-3">
+            <div class="p-2">
+                <p class="text-center text-gray-400 text-xs font-semibold">no records found</p>
+            </div>
         </div>
-        {% endfor %}
-        
-{% else %}
-    <div class="max-w-xs bg-white shadow-xl rounded-lg py-3">
-    <div class="p-2">
-      <p class="text-center text-gray-400 text-xs font-semibold">no records found</p>
+        {% endif %}
     </div>
-  </div>
-{% endif %}
+
+    <div class="mt-auto">
+        {% include 'footer.php'%}
+    </div>
 </div>
 {% endblock %}
-
