@@ -71,7 +71,4 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-4">
         <a href="{{ path('app_profil_index') }}" class="text-blue-600 hover:text-blue-800">{{ 'Retour à la liste'|trans }}</a>
     </div>
- {% if is_granted('ROLE_ADMIN') %}
-    {{ include('profil/_delete_form.html.twig') }}
-{%endif%}
 {% endblock %}

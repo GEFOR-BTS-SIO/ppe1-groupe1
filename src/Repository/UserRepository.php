@@ -109,4 +109,14 @@ public function findOneBySomeField($value): ?User
 
     return $qb->execute();
 }
+
+
+    public function findAllSortedAlphabetically()
+    {
+        return $this->createQueryBuilder('u')
+            ->orderBy('u.nom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
 }
