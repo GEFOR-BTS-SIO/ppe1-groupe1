@@ -111,18 +111,19 @@ public function findOneBySomeField($value): ?User
 }
 
 public function findByFilters($filterData)
-    {
-        $qb = $this->createQueryBuilder('u');
-        // Ajoutez la logique de filtrage en fonction des critères de filtrage
+{
+    $qb = $this->createQueryBuilder('u');
+    $qb->leftJoin('u.idformation', 'f'); // Joindre la relation vers l'entité Formation
 
-        if (isset($filterData['cursus'])) {
-            $qb->andWhere('u.idformation.cursus = :cursus')
-                ->setParameter('cursus', $filterData['cursus']);
-        }
-
-        // Ajoutez d'autres conditions de filtrage en fonction de vos besoins
-
-        return $qb->getQuery()->getResult();
+    if (isset($filterData['cursus'])) {
+        $qb->andWhere($qb->expr()->in('f.cursus', ':cursus'))
+            ->setParameter('cursus', $filterData['cursus']);
     }
+
+    // Ajoutez d'autres conditions de filtrage en fonction de vos besoins
+
+    return $qb->getQuery()->getResult();
+}
+
 
 }

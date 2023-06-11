@@ -85,10 +85,7 @@ public function index(Request $request, UserRepository $userRepository): Respons
             return $this->redirectToRoute('app_profil_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('profil/new.html.twig', [
-            'user' => $user,
-            'form' => $form->createView(),
-        ]);
+       
     }
 
     #[Route('/{id}', name: 'app_profil_show', methods: ['GET'])]
